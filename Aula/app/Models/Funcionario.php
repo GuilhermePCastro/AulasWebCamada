@@ -25,4 +25,6 @@ class Funcionario extends Model
     public $timestamps = false;
     -------------------------------------------------*/
     protected $table = 'tb_funcionario';
+
+    
 }
