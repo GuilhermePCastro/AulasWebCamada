@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\ClientesController;
 
 /*
 |--------------------------------------------------------------------------
@@ -44,3 +45,14 @@ Route::get('/tabela', function () {
                                                             'titulos' => '3 1/2',
                                                             'tamanho' => 'Modesto']]]);
 })-> name('tabela');
+
+Auth::routes();
+
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+
+Route::group(['prefix' => 'clientes'], function(){
+    Route::get('/listar', [ClientesController::class, 'listar'])->name('clientes.listar')->middleware('auth');
+});
+
+//Route::get('/clientes', [ClientesController::class, 'listar'])->name('clientes.listar');
+
