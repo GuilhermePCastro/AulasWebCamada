@@ -20,11 +20,11 @@ class UserController extends Controller
     public function index(Request $request)
     {
         $paginacao = 5;
-        $users = User::orderBy('id', 'DESC')->paginate($paginacao);
+        $data = User::orderBy('id', 'DESC')->paginate($paginacao);
 
         return view('users.index',
                 compact('data'))->
-                    with('users', ($request->input('page', 1) - 1 * $paginacao));
+                    with('i', ($request->input('page', 1) - 1 * $paginacao));
     }
 
     /**
@@ -102,7 +102,31 @@ class UserController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $this->validate($request,
+                        ['name' => 'required',
+                         'email' => 'required|email|unique:users,email',
+                         'password' => 'required|same:confirm-password',
+                         'roles' => 'required']);
+
+        $input = $request->all();
+        if(empty($input['password'])){
+            $input = Arr::except($input, ['password']);
+        }else{
+            $input['password'] = hash::make($input['password']);
+        }
+
+        $user = User::find($id);
+        $user->update($input);
+
+        //Consulta sem Model - apagando as roles
+        DB::table('model_has_roles')->where('model_id', $id)->delete();
+
+        // salvando as roles
+        $user->assignRole($request->input('roles'));
+
+        //redirecionando
+        return redirect()->route('users.index')->with('success', 'Usuário atualizado com sucesso');
+
     }
 
     /**
