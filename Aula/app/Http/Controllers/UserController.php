@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
 use App\Models\User;
-use Spatie\Permission\Model\Role;
+use Spatie\Permission\Models\Role;
 
 use DB;
 use Hash;
@@ -34,8 +34,8 @@ class UserController extends Controller
      */
     public function create()
     {
-        $roles = Role::pluck('name', 'name')->all();
-        return view('users.create', compact($roles));
+        $roles  = Role::pluck('name', 'name')->all();
+        return view('users.create')->with('roles', compact($roles));
 
     }
 
