@@ -6,12 +6,16 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
 use App\Models\User;
 use Spatie\Permission\Models\Role;
+use Spatie\Permission\Traits\HasRoles;
 
 use DB;
 use Hash;
 
+
 class UserController extends Controller
 {
+
+    use HasRoles;
     /**
      * Display a listing of the resource.
      *

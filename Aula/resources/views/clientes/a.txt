@@ -1,0 +1,52 @@
+INDEX
+ <td>
+            @if(!empty($cliente->getRoleNames()))
+
+                @foreach($cliente->getRoleNames() as $v)
+
+                <label class="badge badge-success">{{ $v }}</label>
+
+                @endforeach
+
+                @endif
+
+
+            </td>
+
+CREATE
+
+<div class="col-xs-12 col-sm-12 col-md-12">
+                    <div class="form-group">
+                        <strong>Perfil:</strong>
+
+                        {!! Form::select('roles[]', $roles,[], array('class' => 'form-control','multiple')) !!}
+
+                    </div>
+                </div>
+
+SHOW
+
+<div class="col-xs-12 col-sm-12 col-md-12">
+                <div class="form-group">
+                    <strong>Perfil:</strong>
+
+                    @if(!empty($user->getRoleNames()))
+
+                        @foreach($user->getRoleNames() as $v)
+
+                            <label class="badge badge-success">{{ $v }}</label>
+
+                        @endforeach
+
+                    @endif
+
+                </div>
+            </div>
+
+EDIT
+<div class="col-xs-12 col-sm-12 col-md-12">
+                <div class="form-group">
+                    <strong>Perfil:</strong>
+                    {!! Form::select('roles[]', $roles,$userRole, array('class' => 'form-control','multiple')) !!}
+                </div>
+            </div>
