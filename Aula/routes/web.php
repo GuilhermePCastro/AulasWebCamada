@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ClientesController;
+use App\Http\Controllers\ProdutosController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\FuncionariosController;
@@ -72,5 +73,7 @@ Route::group(['middleware' => ['auth']], function(){
 
     Route::resource('/users',UserController::class);
     Route::resource('/roles',RoleController::class);
+    Route::resource('/clientes',ClientesController::class);
+    Route::resource('/produtos',ProdutosController::class);
 });
 

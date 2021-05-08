@@ -5,13 +5,25 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
 use App\Models\User;
-use Spatie\Permission\Model\Role;
+use Spatie\Permission\Models\Role;
+use Spatie\Permission\Traits\HasRoles;
 
 use DB;
 use Hash;
 
+
 class UserController extends Controller
 {
+
+    public function __construct(){
+        $this->middleware('permission:user-list',['only' => ['index', 'show']]);
+        $this->middleware('permission:user-create',['only' => ['create', 'store']]);
+        $this->middleware('permission:user-edit',['only' => ['edit', 'update']]);
+        $this->middleware('permission:user-delete',['only' => ['destroy']]);
+    }
+
+
+    use HasRoles;
     /**
      * Display a listing of the resource.
      *
@@ -34,8 +46,8 @@ class UserController extends Controller
      */
     public function create()
     {
-        $roles = Role::pluck('name', 'name')->all();
-        return view('users.create', compact($roles));
+        $roles  = Role::pluck('name', 'name')->all();
+        return view('users.create')->with('roles', $roles);
 
     }
 
@@ -104,7 +116,7 @@ class UserController extends Controller
     {
         $this->validate($request,
                         ['name' => 'required',
-                         'email' => 'required|email|unique:users,email',
+                         'email' => 'required|email|unique:tb_cliente,email',
                          'password' => 'required|same:confirm-password',
                          'roles' => 'required']);
 

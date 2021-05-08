@@ -1,39 +1,34 @@
 <?php
 
 namespace App\Http\Controllers;
-use App\Models\Cliente;
+
+use App\Models\Produto;
 use Illuminate\Support\Arr;
 use Illuminate\Http\Request;
 use Spatie\Permission\Models\Role;
 use Spatie\Permission\Traits\HasRoles;
 
-class ClientesController extends Controller
+class ProdutosController extends Controller
 {
 
-    use HasRoles;
-
-    //Forma de controlar o acesso
-
-
     public function __construct(){
-        $this->middleware('permission:cliente-list',['only' => ['index', 'show']]);
-        $this->middleware('permission:cliente-create',['only' => ['create', 'store']]);
-        $this->middleware('permission:cliente-edit',['only' => ['edit', 'update']]);
-        $this->middleware('permission:cliente-delete',['only' => ['destroy']]);
+        $this->middleware('permission:produto-list',['only' => ['index', 'show']]);
+        $this->middleware('permission:produto-create',['only' => ['create', 'store']]);
+        $this->middleware('permission:produto-edit',['only' => ['edit', 'update']]);
+        $this->middleware('permission:produto-delete',['only' => ['destroy']]);
     }
 
-    public function listar(){
-        $clientes = Cliente::all();
-
-        return view('clientes.listar', ['clientes' => $clientes]);
-    }
-
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
     public function index(Request $request)
     {
-        $paginacao = 5;
-        $data = Cliente::orderBy('id', 'DESC')->paginate($paginacao);
+        $paginacao = 7;
+        $data = Produto::orderBy('id', 'DESC')->paginate($paginacao);
 
-        return view('clientes.index',
+        return view('produtos.index',
                 compact('data'))->
                     with('i', ($request->input('page', 1) - 1 * $paginacao));
     }
@@ -45,8 +40,7 @@ class ClientesController extends Controller
      */
     public function create()
     {
-        return view('clientes.create');
-
+        return view('produtos.create');
     }
 
     /**
@@ -58,15 +52,14 @@ class ClientesController extends Controller
     public function store(Request $request)
     {
         $this->validate($request,
-                        ['nome' => 'required',
-                         'email' => 'required|email|unique:tb_cliente,email']);
+                                ['nome' => 'required',
+                                 'preco' => 'required']);
 
         $input = $request->all();
 
-       Cliente::create($input);
+        Produto::create($input);
 
-        return redirect()->route('clientes.index')->with('success', 'Usuário criado com sucesso');
-
+        return redirect()->route('produtos.index')->with('success', 'Produto criado com sucesso');
     }
 
     /**
@@ -77,8 +70,8 @@ class ClientesController extends Controller
      */
     public function show($id)
     {
-        $cliente = Cliente::find($id);
-        return view('clientes.show', compact('cliente'));
+        $produto = Produto::find($id);
+        return view('produtos.show', compact('produto'));
     }
 
     /**
@@ -89,11 +82,10 @@ class ClientesController extends Controller
      */
     public function edit($id)
     {
-        $cliente = Cliente::find($id);
+        $produto = Produto::find($id);
 
-        return view('clientes.edit', compact('cliente'));
+        return view('produtos.edit', compact('produto'));
     }
-
 
     /**
      * Update the specified resource in storage.
@@ -105,16 +97,16 @@ class ClientesController extends Controller
     public function update(Request $request, $id)
     {
         $this->validate($request,
-                        ['nome' => 'required',
-                        'email' => 'required|email|unique:users,email']);
+                                ['nome' => 'required',
+                                 'preco' => 'required']);
 
         $input = $request->all();
 
-        $cliente = Cliente::find($id);
+        $produto = Produto::find($id);
 
-        $cliente->update($input);
+        $produto->update($input);
 
-        return redirect()->route('clientes.index')->with('success', 'Cliente atualizado com sucesso');
+        return redirect()->route('produtos.index')->with('success', 'Produto atualizado com sucesso');
     }
 
     /**
@@ -125,7 +117,7 @@ class ClientesController extends Controller
      */
     public function destroy($id)
     {
-        Cliente::find($id)->delete();
-        return redirect()->route('clientes.index')->with('success', "Cliente $id apagado com sucesso");
+        Produto::find($id)->delete();
+        return redirect()->route('produtos.index')->with('success', "Produto $id apagado com sucesso");
     }
 }
