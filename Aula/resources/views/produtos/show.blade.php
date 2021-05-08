@@ -5,10 +5,10 @@
 <div class="row">
     <div class="col-lg-12 margin-tb">
         <div class="pull-left">
-            <h2> Detalhes do Cliente</h2>
+            <h2> Detalhes do Produto</h2>
         </div>
         <div class="pull-right">
-            <a class="btn btn-primary" href="{{ route('clientes.index') }}"> Voltar</a>
+            <a class="btn btn-primary" href="{{ route('produtos.index') }}"> Voltar</a>
         </div>
     </div>
 </div>
@@ -22,31 +22,23 @@
         <div class="form-group">
             <strong>Nome:</strong>
 
-            {{ $cliente->nome }}
+            {{ $produto->nome }}
 
         </div>
     </div>
     <div class="col-xs-12 col-sm-12 col-md-12">
         <div class="form-group">
-            <strong>Email:</strong>
+            <strong>Descrição:</strong>
 
-            {{ $cliente->email }}
-
-        </div>
-    </div>
-    <div class="col-xs-12 col-sm-12 col-md-12">
-        <div class="form-group">
-            <strong>Nascimento:</strong>
-
-            {{ $cliente->nascimento }}
+            {{ $produto->descricao }}
 
         </div>
     </div>
     <div class="col-xs-12 col-sm-12 col-md-12">
         <div class="form-group">
-            <strong>Endereço:</strong>
+            <strong>Preço:</strong>
 
-            {{ $cliente->endereco }}
+            {{ $produto->preco }}
 
         </div>
     </div>
