@@ -3,6 +3,7 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\FuncionariosController;
+use App\Http\Controllers\VendasController;
 
 /*
 |--------------------------------------------------------------------------
@@ -26,4 +27,13 @@ Route::prefix('v1')->group(static function(){
     Route::put('/funcionarios/{id}', [FuncionariosController::class, 'update'])->name('funcionarios.update');
     Route::post('/funcionarios', [FuncionariosController::class, 'store'])->name('funcionarios.store');
     Route::delete('/funcionarios/{id}', [FuncionariosController::class, 'destroy'])->name('funcionarios.destroy');
+});
+
+Route::prefix('v1')->group(static function(){
+
+    Route::get('/vendas', [VendasController::class, 'index'])->name('vendas.index');
+    Route::get('/vendas/{id}', [VendasController::class, 'show'])->name('vendas.show');
+    Route::put('/vendas/{id}', [VendasController::class, 'update'])->name('vendas.update');
+    Route::post('/vendas', [VendasController::class, 'store'])->name('vendas.store');
+    Route::delete('/vendas/{id}', [VendasController::class, 'destroy'])->name('vendas.destroy');
 });
