@@ -22,6 +22,21 @@ class ClientesController extends Controller
         $this->middleware('permission:cliente-delete',['only' => ['destroy']]);
     }
 
+    public function getCliente(int $id){
+
+        $cliente = Cliente::find($id);
+
+        return $cliente ?? false;
+
+    }
+    public function checkCliente(int $id){
+
+        $cliente = Cliente::all();
+
+        return $cliente ?? false;
+
+    }
+
     public function listar(){
         $clientes = Cliente::all();
 

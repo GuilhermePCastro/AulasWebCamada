@@ -33,6 +33,10 @@ class ProdutosController extends Controller
                     with('i', ($request->input('page', 1) - 1 * $paginacao));
     }
 
+    public function getAll(){
+        return Produto::all();
+    }
+
     /**
      * Show the form for creating a new resource.
      *
@@ -71,7 +75,7 @@ class ProdutosController extends Controller
     public function show($id)
     {
         $produto = Produto::find($id);
-        return view('produtos.show', compact('produto'));
+        return $produto;
     }
 
     /**
